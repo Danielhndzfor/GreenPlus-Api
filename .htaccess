@@ -1,0 +1,18 @@
+# Hostinger - Node.js via Phusion Passenger
+# Subir el contenido de src/ a la raiz de la app (public_html o carpeta de la app Node).
+PassengerEnabled On
+PassengerAppType node
+PassengerStartupFile src/app.js
+
+# Todas las rutas (/docs, /api/*, /openapi.json) las resuelve Express
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Forzar HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# No exponer archivos sensibles
+<FilesMatch "^(package\.json|package-lock\.json|\.env.*)$">
+  Require all denied
+</FilesMatch>

@@ -1,0 +1,98 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "GreenPlus API",
+    "version": "1.0.0",
+    "description": "API basica de ejemplo."
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Estado del servicio",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" },
+                    "time": { "type": "string", "format": "date-time" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items": {
+      "get": {
+        "summary": "Listar items",
+        "responses": {
+          "200": {
+            "description": "Lista de items",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Item" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": { "name": { "type": "string", "example": "Nuevo item" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creado",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Item" } }
+            }
+          },
+          "400": { "description": "name requerido" }
+        }
+      }
+    },
+    "/api/items/{id}": {
+      "get": {
+        "summary": "Obtener item por id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Item" } }
+            }
+          },
+          "404": { "description": "No encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "name": { "type": "string", "example": "Item 1" }
+        }
+      }
+    }
+  }
+}

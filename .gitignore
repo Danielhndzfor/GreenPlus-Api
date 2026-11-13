@@ -1,0 +1,15 @@
+# Obligatorias (politica org, nunca eliminar)
+.secrets/
+*.env
+certs/
+prod.env
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Sistema / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
